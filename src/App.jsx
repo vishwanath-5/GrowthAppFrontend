@@ -5,12 +5,12 @@ import Tasks from "./pages/Tasks";
 import Dashboard from "./pages/Dashboard";
 import Chat from "./pages/Chat";
 import Navbar from "./components/Navbar";
+const hideNavbar = ["/", "/register"].includes(location.pathname);
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-
+      {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
