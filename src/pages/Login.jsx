@@ -19,7 +19,7 @@ const Login = () => {
         try {
             setLoading(true);
 
-            const res = await API.post("/auth/login", {
+            const res = await API.post("/token/", {
                 username,
                 password,
             });
