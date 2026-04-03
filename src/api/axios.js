@@ -1,15 +1,16 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_NODE_BASE_URL, // e.g. https://growthappbackend.onrender.com/api
+  // ❗ NO /api here
+  baseURL: import.meta.env.VITE_NODE_BASE_URL,
 });
 
 // 🔐 REQUEST INTERCEPTOR
 API.interceptors.request.use(
   (req) => {
-    const token = localStorage.getItem("access"); // ✅ use "access" for JWT
+    const token = localStorage.getItem("access");
 
-    // ✅ Skip adding token for login endpoint
+    // ✅ Skip token for login
     if (token && !req.url.includes("/token/")) {
       req.headers.Authorization = `Bearer ${token}`;
     }
@@ -23,9 +24,8 @@ API.interceptors.request.use(
 API.interceptors.response.use(
   (res) => res,
   (error) => {
-    // ✅ Only logout if token exists and is invalid
     if (error.response?.status === 401) {
-      console.log("🔴 Unauthorized - Token expired or invalid");
+      console.log("🔴 Unauthorized - Token expired");
 
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
