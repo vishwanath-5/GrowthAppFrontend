@@ -8,7 +8,7 @@ const API = axios.create({
 // 🔐 REQUEST INTERCEPTOR
 API.interceptors.request.use(
   (req) => {
-    const token = localStorage.getItem("access");
+    const token = localStorage.getItem("access token");
 
     // ✅ Skip token for auth endpoints
     if (
