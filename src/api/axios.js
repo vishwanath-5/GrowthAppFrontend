@@ -1,15 +1,13 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: import.meta.env.VITE_NODE_BASE_URL,
 });
 
+// 🔐 REQUEST INTERCEPTOR
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
 
-  console.log("TOKEN BEING SENT:", token);
-
-  // 🚀 Skip token for auth routes
   if (
     token &&
     !req.url.includes("/auth/login") &&
@@ -20,5 +18,18 @@ API.interceptors.request.use((req) => {
 
   return req;
 });
+
+// 🚨 RESPONSE INTERCEPTOR
+API.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default API;
