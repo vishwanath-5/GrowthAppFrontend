@@ -23,7 +23,7 @@ const Register = () => {
             setError("");
             setMessage("");
 
-            const res = await API.post("/auth/register", {
+            const res = await API.post("/users/register", {
                 username,
                 email,
                 password,
