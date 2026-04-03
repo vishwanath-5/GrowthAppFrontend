@@ -4,7 +4,6 @@ const API = axios.create({
   // ❗ NO /api here
   baseURL: import.meta.env.VITE_NODE_BASE_URL,
 });
-
 // 🔐 REQUEST INTERCEPTOR
 API.interceptors.request.use(
   (req) => {
